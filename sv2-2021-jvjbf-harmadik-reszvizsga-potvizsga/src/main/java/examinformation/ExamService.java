@@ -47,7 +47,7 @@ public class ExamService {
 
     public String findBestPerson(){
         List<String> passed=results.entrySet().stream().filter(entry->!findPeopleFailed().contains(entry.getKey())).map(Map.Entry::getKey).collect(Collectors.toList());
-        int maxPoint=results.entrySet().stream().map(Map.Entry::getValue).map(value->(value.getPractice()+value.getTheory())).max(Integer::compareTo).get();
+        int maxPoint=results.entrySet().stream().filter(entry->!findPeopleFailed().contains(entry.getKey())).map(Map.Entry::getValue).map(value->(value.getPractice()+value.getTheory())).max(Integer::compareTo).get();
         List<String> bests=new ArrayList<>();
         for (Map.Entry<String,ExamResult> entry : results.entrySet()) {
             if(passed.contains(entry.getKey())&&maxPoint==(entry.getValue().getPractice()+entry.getValue().getTheory())){
